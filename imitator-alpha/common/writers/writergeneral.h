@@ -1,7 +1,7 @@
 #ifndef WRITERGENERAL_H
 #define WRITERGENERAL_H
 
-#include "imitator_headers.h"
+#include "../../imitator/imitator_headers.h"
 
 class WriterGeneral : public QObject
 {

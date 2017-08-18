@@ -8,6 +8,7 @@
 #define DATA_TYPE_STOP_WRITING  3
 #define INFO_ALL_CONNECTED      1
 #define INFO_SERVER_FINISHED    2
+#define INFO_CONFIG_ERROR       3
 #define SOCKET_ID_DATA          1
 #define SOCKET_ID_LOG           2
 #define SOCKET_ID_TELEM         3
@@ -20,6 +21,7 @@
 #include <QLabel>
 #include <QStatusBar>
 #include <QFileDialog>
+#include <QLineEdit>
 #include <QString>
 #include <QComboBox>
 #include <QThread>
@@ -29,7 +31,12 @@
 #include <QTcpSocket>
 #include <QByteArray>
 #include <QDateTime>
+#include <QList>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
+#include <QDebug>
 using namespace std;
-
 
 #endif // IMITATOR_HEADERS_H

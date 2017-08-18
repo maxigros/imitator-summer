@@ -4,12 +4,12 @@
 #include "imitator_headers.h"
 #include "writers_all.h"
 
-class BoxNetwork : public QObject
+class BoxWriter : public QObject
 {
     Q_OBJECT
 public:
-    explicit BoxNetwork(QString writer_mode, QObject *parent = 0);
-    ~BoxNetwork();
+    explicit BoxWriter(QString writer_mode, QObject *parent = 0);
+    ~BoxWriter();
     /**************************************************************************
      *  Threads
      *************************************************************************/
@@ -32,11 +32,16 @@ private:
                             // знаем из конфигурации имитатора
     int configWriterMode;
 
+signals:
+    void sendInfo(int info);
+
 public slots:
     // Прием конфигурационных параметров из BoxGenerate
-    void getConfigParams(QMap<QString, double> params);
+    void getConfigParams(Storage* configParams);
     // Прием данных из BoxGenerate
     void getData(int data_type, double angle, complex<double> *data);
+private slots:
+    void getInfo(int info);
 };
 
 #endif // BOXNETWORK_H

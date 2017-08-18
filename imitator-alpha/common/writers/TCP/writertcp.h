@@ -1,9 +1,9 @@
 #ifndef WRITERTCP_H
 #define WRITERTCP_H
 
-#include "imitator_headers.h"
-#include "writergeneral.h"
+#include "../../../imitator/imitator_headers.h"
 #include "server.h"
+#include "../writergeneral.h"
 
 class WriterTcp : public WriterGeneral
 {

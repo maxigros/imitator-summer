@@ -99,8 +99,8 @@ void MainWindow::on_pushButton_generation_start_clicked()
             threadGenerate, SLOT(deleteLater()));
     // Обмен данными между BoxNetwork и BoxGenerate
     // Коннектим здесь, т.к. moduleGenerate точно создается после moduleWriter
-    connect(moduleGenerate, SIGNAL(sendConfigParams(QMap<QString,double>)),
-            moduleWriter,   SLOT(getConfigParams(QMap<QString,double>)),
+    connect(moduleGenerate, SIGNAL(sendConfigParams(Storage*)),
+            moduleWriter,   SLOT(getConfigParams(Storage*)),
             Qt::DirectConnection);
     connect(moduleGenerate, SIGNAL(sendData(int,double,complex<double>*)),
             moduleWriter,   SLOT(getData(int,double,complex<double>*)),

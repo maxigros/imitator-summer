@@ -28,11 +28,14 @@ public slots:
 public slots:
     void getInfo(int info);
 private:
-    QMap<QString, double> mapConfigParams;
+    QString filename;
+    // Параметры для конфигурации BoxWriter
+    QMap<QString, double> configWriterParams;
     void run();
+    Storage *params;
 signals:
     // Шлем конфигурационные параметры в BoxNetwork
-    void sendConfigParams(QMap<QString, double> params);
+    void sendConfigParams(Storage *configParams);
     // Шлем данные в BoxNetwork
     void sendData(int data_type, double angle, complex<double> *data);
 };

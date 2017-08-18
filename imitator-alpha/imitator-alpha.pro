@@ -5,10 +5,11 @@
 #-------------------------------------------------
 
 QT       += core gui network
+CONFIG   += console
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = imitator-network
+TARGET = imitator-alpha
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,19 +26,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    boxgenerate.cpp \
-    writergeneral.cpp \
-    writertcp.cpp \
-    server.cpp \
-    boxwriter.cpp
+    common/config_storage/storage.cpp \
+    common/writers/TCP/server.cpp \
+    common/writers/TCP/writertcp.cpp \
+    common/writers/boxwriter.cpp \
+    common/writers/writergeneral.cpp \
+    imitator/boxgenerate.cpp
 
 HEADERS  += mainwindow.h \
-    boxgenerate.h \
-    writergeneral.h \
-    writers_all.h \
-    writertcp.h \
-    imitator_headers.h \
-    server.h \
-    boxwriter.h
+    common/config_storage/storage.h \
+    common/writers/TCP/server.h \
+    common/writers/TCP/writertcp.h \
+    common/writers/boxwriter.h \
+    common/writers/writergeneral.h \
+    imitator/boxgenerate.h \
+    imitator/imitator_headers.h
 
 FORMS    += mainwindow.ui

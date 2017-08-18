@@ -1,0 +1,78 @@
+{
+    "STATION_POWER": 10e+4,
+    "LOCATOR_ENCODER_RESOLUTION": 10000,
+    "STATION_ATTENUATOR": [
+        {"range": 100, "reduce": 100},
+        {"range": 200, "reduce": 10},
+        {"range": 300, "reduce": 1}
+    ],
+    "FREQUENCY": 7e+6,
+    "TARGETS": [
+              {
+            "name": 1,
+            "x0": -1500,
+            "y0": 500,
+            "z0": 0,
+            "Vx": 15,
+            "Vy": 15,
+            "Vz": 0,
+            "ax": 0,
+            "ay": 0,
+            "az": 0,
+            "mu": 0,
+            "speed_sigma": 5,
+            "rsc_sigma": 0.5,
+            "gain_range": 1000,
+            "gain_value": 300
+            },{
+            "name": 2,
+            "x0": 550,
+            "y0": 750,
+            "z0": 0,
+            "Vx": 15,
+            "Vy": -15,
+            "Vz": 0,
+            "ax": 0,
+            "ay": 0,
+            "az": 0,
+            "mu": 0,
+            "speed_sigma": 5,
+            "rsc_sigma": 0.5,
+            "gain_range": 1000,
+            "gain_value": 300
+            },{
+            "name": 3,
+            "x0": 1200,
+            "y0": 500,
+            "z0": 0,
+            "Vx": 15,
+            "Vy": 15,
+            "Vz": 0,
+            "ax": 0,
+            "ay": 0,
+            "az": 0,
+            "mu": 0,
+            "speed_sigma": 5,
+            "rsc_sigma": 0.5,
+            "gain_range": 1000,
+            "gain_value": 300
+            }
+
+    ],
+    "PULSE_DURATION": 3e-7,
+    "PULSE_REPEAT_TIME": 2e-05,
+    "PULSE_ACCUMULATION_RATE": 16,
+    "SIMPLE_STEP": 1e-4,
+    "X_SIZE": 2,
+    "X_START": 2,
+    "Z_SIZE": 1.5,
+    "Z_START": 2,
+    "ROTATION_SPEED": 360,
+    "LAMBDA": 0.03,
+    "DNA_KIP": 1,
+    "DNA_KPD": 1,
+    "RECEIVER_GAIN": 10e+8,
+    "RECEIVER_NOISE": 10,
+    "RECEIVER_TRACT": 10,
+    "ANTENNA_TRACT": 10
+}

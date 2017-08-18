@@ -2,33 +2,34 @@
 
 WriterTcp::WriterTcp(int data_array_len) : WriterGeneral(data_array_len)
 {
-    cout << "WriterTcp created" << endl;
+    qDebug() << "WriterTcp created";
     moduleServer = new Server;
     connect(moduleServer, SIGNAL(sendInfo(int)),
             this,         SLOT(getInfo(int)));
+    moduleServer->start();
 }
 
 WriterTcp::~WriterTcp()
 {
-    cout << "WriterTcp deleting" << endl;
+    qDebug() << "WriterTcp deleting";
     delete moduleServer;
 }
 
 void WriterTcp::newFrame()
 {
-    cout << "WriterTcp newFrame" << endl;
+    qDebug() << "WriterTcp newFrame";
 }
 
 void WriterTcp::write(double angle, complex<double> *data)
 {
-    cout << "WriterTcp write" << endl;
+    qDebug() << "WriterTcp write";
     // Формирование HeaderString
 
 }
 
 void WriterTcp::stop_writing()
 {
-    cout << "WriterTcp stop_writing" << endl;
+    qDebug() << "WriterTcp stop_writing";
 }
 
 void WriterTcp::getInfo(int info)
@@ -37,7 +38,7 @@ void WriterTcp::getInfo(int info)
     if (info == INFO_ALL_CONNECTED){
         QByteArray hello;
         QString message = "Greetings";
-        QString who = "Imitator";
+        QString who = " Imitator";
         QString when = QDateTime::currentDateTime().toString("hh:mm:ss");
         unsigned int size = message.toUtf8().size() + who.toUtf8().size() + when.toUtf8().size() + 3;
         hello.append(size >> 0);

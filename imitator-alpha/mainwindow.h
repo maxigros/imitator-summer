@@ -1,9 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "imitator_headers.h"
-#include "boxwriter.h"
-#include "boxgenerate.h"
+#include "imitator/imitator_headers.h"
+#include "common/writers/boxwriter.h"
+#include "imitator/boxgenerate.h"
+
 
 namespace Ui {
 class MainWindow;

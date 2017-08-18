@@ -2,12 +2,12 @@
 
 WriterGeneral::WriterGeneral(int data_array_len, QObject *parent) : QObject(parent)
 {
-    cout << "WriterGeneral created" << endl;
+
 }
 
 WriterGeneral::~WriterGeneral()
 {
-    cout << "WriterGeneral deleting" << endl;
+
 }
 
 void WriterGeneral::i_newFrame()
@@ -32,7 +32,7 @@ void WriterGeneral::newFrame()
 
 void WriterGeneral::write(double angle, complex<double> *data)
 {
-    cout << "WriterGeneral write" << endl;
+
     Q_UNUSED(angle);
     Q_UNUSED(data);
 }
