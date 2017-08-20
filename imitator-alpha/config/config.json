@@ -1,6 +1,7 @@
 {
     "STATION_POWER": 10e+4,
     "LOCATOR_ENCODER_RESOLUTION": 10000,
+    "THINNING" : 10,
     "STATION_ATTENUATOR": [
         {"range": 100, "reduce": 100},
         {"range": 200, "reduce": 10},

@@ -31,7 +31,9 @@ SOURCES += main.cpp\
     common/writers/TCP/writertcp.cpp \
     common/writers/boxwriter.cpp \
     common/writers/writergeneral.cpp \
-    imitator/boxgenerate.cpp
+    imitator/boxgenerate.cpp \
+    imitator/datasource.cpp \
+    imitator/receivers/receivergeneral.cpp
 
 HEADERS  += mainwindow.h \
     common/config_storage/storage.h \
@@ -40,6 +42,9 @@ HEADERS  += mainwindow.h \
     common/writers/boxwriter.h \
     common/writers/writergeneral.h \
     imitator/boxgenerate.h \
-    imitator/imitator_headers.h
+    imitator/imitator_headers.h \
+    imitator/datasource.h \
+    imitator/receivers/receivergeneral.h \
+    imitator/receivers/receivers.h
 
 FORMS    += mainwindow.ui

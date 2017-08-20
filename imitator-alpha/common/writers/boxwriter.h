@@ -28,14 +28,10 @@ public slots:
      *************************************************************************/
 private:
     WriterGeneral *writer;
-    bool waiting_for_info = true;
-    int data_array_len;     // Характеристика приемника,
-                            // знаем из конфигурации имитатора
+    bool waitingForConfigInfo = true;
     int configWriterMode;
-
 signals:
     void sendInfo(int info);
-
 public slots:
     // Прием конфигурационных параметров из BoxGenerate
     void getConfigParams(Storage* configParams);
@@ -43,6 +39,24 @@ public slots:
     void getData(int data_type, double angle, complex<double> *data);
 private slots:
     void getInfo(int info);
+
+    /**************************************************************************
+     * Технические параметры имитатора
+     *************************************************************************/
+private:
+    // Длина массива данных в одном кадре
+    int dataArrayLength;
+
+    // Количество угловых направлений по азимуту, поддерживаемых энкодером локатора,
+    // т.е. максимально возможное количество "шагов" угла в одном обзоре.
+    // Далее упом. как "дискретные шаги"
+    int maxStepsInFrame;
+
+    // Размер "прореженного шага" (количество "дискретных шагов" в одном "прореженном")
+    double stepSizeWithThinning;
+
+    // Количество "прореженных шагов" в одном обзоре
+    int thinStepsInFrame;
 };
 
 #endif // BOXNETWORK_H

@@ -6,6 +6,9 @@ BoxGenerate::BoxGenerate(QString configFilename, QObject *parent) : QObject(pare
     params = new Storage();
     connect(params, SIGNAL(sendInfo(int)), this, SLOT(getInfo(int)));
     connect(this, SIGNAL(finish()), params, SLOT(deleteLater()));
+
+    imitator = new DataSource();
+    connect(this, SIGNAL(finish()), imitator, SLOT(deleteLater()));
 }
 
 BoxGenerate::~BoxGenerate()
@@ -24,10 +27,8 @@ void BoxGenerate::process()
     params->process(filename);
     // Отправляем в BoxWriter
     emit sendConfigParams(params);
-    // Создание общего класса DataSource (внутри будут остальные)
-    // ----------------------------------
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // -----------------------------------
+    // Конфигурация DataSource
+    imitator->configure(params);
 }
 
 void BoxGenerate::getInfo(int info)
@@ -69,20 +70,25 @@ void BoxGenerate::run()
      * }
      */
 
+    while (!toStop){
+        data_container tempData = imitator->update();
+        emit sendData(DATA_TYPE_WRITE, tempData.angle, tempData.data);
+    }
+
 
 
     // Заглушка WHILE
-    int counter = 0;
-    complex<double> *data;
-    data = new complex<double>[10];
-    for (int i = 0; i < 10; i++)
-        data[i] = complex<double>((double)(i), -(double)(i));
-    while(!toStop){
-        counter++;
-        if (counter == 10e8){
-            counter = 0;
-            emit sendData(DATA_TYPE_WRITE, 10, data);
-            qDebug() << "BoxGenerate EMIT";
-        }
-    }
+//    int counter = 0;
+//    complex<double> *data;
+//    data = new complex<double>[10];
+//    for (int i = 0; i < 10; i++)
+//        data[i] = complex<double>((double)(i), -(double)(i));
+//    while(!toStop){
+//        counter++;
+//        if (counter == 10e8){
+//            counter = 0;
+//            emit sendData(DATA_TYPE_WRITE, 10, data);
+//            qDebug() << "BoxGenerate EMIT";
+//        }
+//    }
 }

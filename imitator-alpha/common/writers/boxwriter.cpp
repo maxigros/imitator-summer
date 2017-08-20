@@ -24,13 +24,14 @@ void BoxWriter::stop_box()
 void BoxWriter::process()
 {
     // Ожидаем параметров, после этого создаем класс с интерфейсами
-    while(waiting_for_info && !toStop);
+    while(waitingForConfigInfo && !toStop);
 
     if (!toStop){
-        qDebug() << QString("BoxWriter::process success: config applied");
+        qDebug() << "BoxWriter::process success: config applied";
         switch (configWriterMode) {
         case WRITER_MODE_NETWORK:
-            writer = new WriterTcp(data_array_len);
+            writer = new WriterTcp();
+            writer->i_get_ready(dataArrayLength, thinStepsInFrame);
             connect(this,   SIGNAL(finish()),
                     writer, SLOT(deleteLater()));
             connect(writer, SIGNAL(sendInfo(int)),
@@ -63,11 +64,17 @@ void BoxWriter::getConfigParams(Storage *configParams)
 
     // Проверяем, пришел ли нужный параметр
     if (configParams->parameters.simple.keys().contains("PULSE_REPEAT_TIME") &&
-        configParams->parameters.simple.keys().contains("FREQUENCY")){
+        configParams->parameters.simple.keys().contains("FREQUENCY") &&
+        configParams->parameters.simple.keys().contains("LOCATOR_ENCODER_RESOLUTION") &&
+        configParams->parameters.simple.keys().contains("THINNING")){
 
-        data_array_len = (int)(configParams->parameters.simple.value("PULSE_REPEAT_TIME")/
+        dataArrayLength = (int)(configParams->parameters.simple.value("PULSE_REPEAT_TIME")/
                                (1 / configParams->parameters.simple.value("FREQUENCY")));
-        waiting_for_info = false;
+        dataArrayLength = 20;
+        maxStepsInFrame = (int)configParams->parameters.simple.value("LOCATOR_ENCODER_RESOLUTION");
+        stepSizeWithThinning = configParams->parameters.simple.value("THINNING");
+        thinStepsInFrame = (int)(maxStepsInFrame / stepSizeWithThinning);
+        waitingForConfigInfo = false;
         return;
     }
 
@@ -76,13 +83,17 @@ void BoxWriter::getConfigParams(Storage *configParams)
         qDebug() << "BoxWriter::getConfigParams error: parameter 'PULSE_REPEAT_TIME' is absent";
     if (!configParams->parameters.simple.keys().contains("FREQUENCY"))
         qDebug() << "BoxWriter::getConfigParams error: parameter 'FREQUENCY' is absent";
+    if (!configParams->parameters.simple.keys().contains("LOCATOR_ENCODER_RESOLUTION"))
+        qDebug() << "BoxWriter::getConfigParams error: parameter 'LOCATOR_ENCODER_RESOLUTION' is absent";
+    if (!configParams->parameters.simple.keys().contains("THINNING"))
+        qDebug() << "BoxWriter::getConfigParams error: parameter 'THINNING' is absent";
     // ToDo: обработка ошибки (м.б. сигналы)
 
 }
 
 void BoxWriter::getData(int data_type, double angle, complex<double> *data)
 {
-    if (waiting_for_info){
+    if (waitingForConfigInfo){
         // Ошибка: конфигурация не завершена, не можем работать с данными
         qDebug() << "BoxWriter::getData error: config not finished";
         // ToDo: обработка ошибки (м.б. сигналы)

@@ -3,6 +3,7 @@
 
 #include "imitator_headers.h"
 #include "../common/config_storage/storage.h"
+#include "datasource.h"
 
 class BoxGenerate : public QObject
 {
@@ -34,6 +35,7 @@ private:
     QMap<QString, double> configWriterParams;
     void run();
     Storage *params;
+    DataSource *imitator;
 signals:
     // Шлем конфигурационные параметры в BoxNetwork
     void sendConfigParams(Storage *configParams);
