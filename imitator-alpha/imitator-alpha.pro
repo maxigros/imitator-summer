@@ -33,7 +33,11 @@ SOURCES += main.cpp\
     common/writers/writergeneral.cpp \
     imitator/boxgenerate.cpp \
     imitator/datasource.cpp \
-    imitator/receivers/receivergeneral.cpp
+    imitator/receivers/receivergeneral.cpp \
+    imitator/locator/locator.cpp \
+    imitator/targets/targetgeneral.cpp \
+    imitator/receivers/receiverradio.cpp \
+    imitator/targets/targetconstspeed.cpp
 
 HEADERS  += mainwindow.h \
     common/config_storage/storage.h \
@@ -45,6 +49,11 @@ HEADERS  += mainwindow.h \
     imitator/imitator_headers.h \
     imitator/datasource.h \
     imitator/receivers/receivergeneral.h \
-    imitator/receivers/receivers.h
+    imitator/receivers/receivers.h \
+    imitator/locator/locator.h \
+    imitator/targets/targetgeneral.h \
+    imitator/targets/targets.h \
+    imitator/receivers/receiverradio.h \
+    imitator/targets/targetconstspeed.h
 
 FORMS    += mainwindow.ui

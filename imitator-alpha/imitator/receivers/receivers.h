@@ -1,5 +1,6 @@
 #ifndef RECEIVERS_H
 #define RECEIVERS_H
 
-#include
+#include "receiverradio.h"
+
 #endif // RECEIVERS_H

@@ -50,45 +50,13 @@ void BoxGenerate::run()
 {
     /**************************************************************************
      * Generation
-     *************************************************************************/
-
-    /*
-     * Один проход WHILE - это один обзор на 360 (new frame)
-     * внутри WHILE:
-     *      цикл FOR для всех направлений (углов), для каждого:
-     *          повернуть локатор
-     *          переместить цели
-     *          принять все цели на приемник
-     *          отправить пакет данных клиенту
      *
-     */
-
-    /*
-     * while(!toStop)
-     * {
-     *      QMap<int, complex<double>> DataSource::update();
-     * }
-     */
+     * Один проход WHILE - это один кадр. Обзоры формируются сменой угловых
+     * направлений внутри класса, как и поворот локатора и движение целей
+     *************************************************************************/
 
     while (!toStop){
         data_container tempData = imitator->update();
         emit sendData(DATA_TYPE_WRITE, tempData.angle, tempData.data);
     }
-
-
-
-    // Заглушка WHILE
-//    int counter = 0;
-//    complex<double> *data;
-//    data = new complex<double>[10];
-//    for (int i = 0; i < 10; i++)
-//        data[i] = complex<double>((double)(i), -(double)(i));
-//    while(!toStop){
-//        counter++;
-//        if (counter == 10e8){
-//            counter = 0;
-//            emit sendData(DATA_TYPE_WRITE, 10, data);
-//            qDebug() << "BoxGenerate EMIT";
-//        }
-//    }
 }

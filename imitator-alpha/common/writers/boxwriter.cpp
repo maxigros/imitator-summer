@@ -70,7 +70,6 @@ void BoxWriter::getConfigParams(Storage *configParams)
 
         dataArrayLength = (int)(configParams->parameters.simple.value("PULSE_REPEAT_TIME")/
                                (1 / configParams->parameters.simple.value("FREQUENCY")));
-        dataArrayLength = 20;
         maxStepsInFrame = (int)configParams->parameters.simple.value("LOCATOR_ENCODER_RESOLUTION");
         stepSizeWithThinning = configParams->parameters.simple.value("THINNING");
         thinStepsInFrame = (int)(maxStepsInFrame / stepSizeWithThinning);
