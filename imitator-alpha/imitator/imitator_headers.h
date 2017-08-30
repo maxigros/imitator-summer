@@ -37,6 +37,9 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QDebug>
+#include <QtMath>
+#include <math.h>
+#include <random>
 using namespace std;
 
 #endif // IMITATOR_HEADERS_H

@@ -31,7 +31,9 @@ void DataSource::configure(Storage *params)
      _receiver->configure(params);
      connect(this, SIGNAL(finish()), _receiver, SLOT(deleteLater()));
      // Цели
-     for (int i = 0; i < params->parameters.targets.count(); i++){
+     targets_num = params->parameters.targets.count();
+     qDebug() << QString("%1 targets in config").arg(targets_num);
+     for (int i = 0; i < targets_num; i++){
          _targets[i] = new TargetConstSpeed();
          // Передаем параметры ТОЛЬКО ОДНОЙ цели
          _targets[i]->configure(params->parameters.targets[i]);
@@ -42,7 +44,7 @@ void DataSource::configure(Storage *params)
 data_container DataSource::update()
 {
 //    qDebug() << "DataSource update";
-//    data_container tempD;;
+//    data_container tempD;
 //    tempD.angle = 5;
 //    tempD.data = new complex<double>[20];
 //    for (int i = 0; i < 20; i++){
@@ -51,4 +53,19 @@ data_container DataSource::update()
 //    return tempD;
 
 
+    // Targets move
+    for (int i = 0; i < targets_num; i++)
+        _targets[i]->i_update();
+
+    // Locator spin
+
+    data_container temp_data;
+    temp_data.angle = currentAngle;
+//    temp_data.data =
+
+    // For next overview
+    currentAngle += stepSizeWithThinning;
+
+    if (currentAngle >= thinStepsInFrame)
+        currentAngle = 0;
 }

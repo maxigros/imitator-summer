@@ -11,6 +11,7 @@ public:
     explicit Locator(QObject *parent = 0);
     ~Locator();
     void configure(Storage *params);
+    void spin();
 
 signals:
 

@@ -11,10 +11,15 @@ public:
     explicit ReceiverGeneral(QObject *parent = 0);
     ~ReceiverGeneral();
     void configure(Storage *params);
+    void blank();
 
     // Интерфейсы
 
     // Переопределяются в наследниках
+protected:
+    Storage *params_temp;
+    complex<double> *echoArray;
+    mt19937 generator;
 
     /**************************************************************************
      * Технические параметры имитатора
@@ -34,6 +39,9 @@ protected:
     double stationPower;
     // Коэффициент усиления приемника
     double receiverGain;
+
+    double sigma;
+    double mu = 0;
 };
 
 #endif // RECEIVERGENERAL_H

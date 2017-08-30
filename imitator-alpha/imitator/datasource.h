@@ -27,6 +27,9 @@ private:
     Locator *_locator;
     ReceiverGeneral *_receiver;
     QList<TargetGeneral*> _targets;
+    double currentAngle = 0;
+    int angleCounter = 0;
+    int targets_num = 0;
 
     /**************************************************************************
      * Технические параметры имитатора
@@ -45,6 +48,8 @@ private:
 
     // Количество "прореженных шагов" в одном обзоре
     int thinStepsInFrame;
+
+
 };
 
 #endif // DATASOURCE_H

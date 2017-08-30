@@ -10,6 +10,8 @@ class TargetConstSpeed : public TargetGeneral
 public:
     TargetConstSpeed();
     ~TargetConstSpeed();
+protected:
+    void update();
 };
 
 #endif // TARGETCONSTSPEED_H

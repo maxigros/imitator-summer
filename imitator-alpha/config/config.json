@@ -22,7 +22,7 @@
             "az": 0,
             "mu": 0,
             "speed_sigma": 5,
-            "rsc_sigma": 0.5,
+            "rcs_sigma": 0.5,
             "gain_range": 1000,
             "gain_value": 300
             },{
@@ -38,7 +38,7 @@
             "az": 0,
             "mu": 0,
             "speed_sigma": 5,
-            "rsc_sigma": 0.5,
+            "rcs_sigma": 0.5,
             "gain_range": 1000,
             "gain_value": 300
             },{
@@ -54,7 +54,7 @@
             "az": 0,
             "mu": 0,
             "speed_sigma": 5,
-            "rsc_sigma": 0.5,
+            "rcs_sigma": 0.5,
             "gain_range": 1000,
             "gain_value": 300
             }
