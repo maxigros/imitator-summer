@@ -16,13 +16,13 @@ public:
     double getAzimuth();
     double getSpeed();
     // interface
-    void i_update();
+    void i_update(double world_time_delta);
 
 protected:
     void translateCoordsToSphere();
 
     //
-    virtual void update();
+    virtual void update(double world_time_delta);
 
     /**************************************************************************
      * Технические параметры имитатора

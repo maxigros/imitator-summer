@@ -11,7 +11,7 @@ public:
     TargetConstSpeed();
     ~TargetConstSpeed();
 protected:
-    void update();
+    void update(double world_time_delta);
 };
 
 #endif // TARGETCONSTSPEED_H

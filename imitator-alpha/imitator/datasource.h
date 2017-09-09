@@ -46,10 +46,14 @@ private:
     // Размер "прореженного шага" (количество "дискретных шагов" в одном "прореженном")
     double stepSizeWithThinning;
 
+    // Угловой размер одного шага (итогового)
+    double angleDelta;
+
     // Количество "прореженных шагов" в одном обзоре
     int thinStepsInFrame;
 
-
+    // Период моделирования мира
+    double world_time_delta;
 };
 
 #endif // DATASOURCE_H

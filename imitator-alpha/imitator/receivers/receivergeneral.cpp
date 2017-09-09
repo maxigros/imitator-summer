@@ -37,7 +37,7 @@ void ReceiverGeneral::configure(Storage *params)
                   params_temp->parameters.simple.value("RECEIVER_TRACT")*
                   params_temp->parameters.simple.value("ANTENNA_TRACT")));
 
-    // Initialization and fulfill with zeros
+    // Инициализация массива отсчетов и заполнение его нулями
     echoArray = new complex<double>[sizeEchoArray];
     for (int i = 0; i < sizeEchoArray; i++)
         echoArray[i] = complex<double>(0.0, 0.0);

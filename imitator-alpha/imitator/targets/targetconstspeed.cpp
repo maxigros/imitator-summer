@@ -10,7 +10,7 @@ TargetConstSpeed::~TargetConstSpeed()
     qDebug() << "TargetConstSpeed deleting";
 }
 
-void TargetConstSpeed::update()
+void TargetConstSpeed::update(double world_time_delta)
 {
     qDebug() << "TargetConstSpeed update";
 }

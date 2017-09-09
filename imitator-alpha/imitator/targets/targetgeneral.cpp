@@ -80,9 +80,9 @@ double TargetGeneral::getSpeed()
     return t;
 }
 
-void TargetGeneral::i_update()
+void TargetGeneral::i_update(double world_time_delta)
 {
-    update();
+    update(world_time_delta);
 }
 
 void TargetGeneral::translateCoordsToSphere()
@@ -96,7 +96,7 @@ void TargetGeneral::translateCoordsToSphere()
                                      place_coordinates.value("x"));
 }
 
-void TargetGeneral::update()
+void TargetGeneral::update(double world_time_delta)
 {
 
 }

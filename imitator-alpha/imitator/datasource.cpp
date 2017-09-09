@@ -15,12 +15,6 @@ void DataSource::configure(Storage *params)
 {
     qDebug() << "DataSource configure";
 
-    // Параметры для update()
-    maxStepsInFrame = (int)params->parameters.simple.value("LOCATOR_ENCODER_RESOLUTION");
-    stepSizeWithThinning = params->parameters.simple.value("THINNING");
-    thinStepsInFrame = (int)(maxStepsInFrame / stepSizeWithThinning);
-
-
     // Локатор
      _locator = new Locator();
      _locator->configure(params);
@@ -30,6 +24,17 @@ void DataSource::configure(Storage *params)
      _receiver = new ReceiverRadio();
      _receiver->configure(params);
      connect(this, SIGNAL(finish()), _receiver, SLOT(deleteLater()));
+
+     // Параметры для update()
+     maxStepsInFrame = (int)params->parameters.simple.value("LOCATOR_ENCODER_RESOLUTION");
+     stepSizeWithThinning = params->parameters.simple.value("THINNING");
+     thinStepsInFrame = (int)(maxStepsInFrame / stepSizeWithThinning);
+     angleDelta = 2 * M_PI / thinStepsInFrame;
+     world_time_delta = angleDelta / _locator->speed;
+
+     // Время
+
+
      // Цели
      targets_num = params->parameters.targets.count();
      qDebug() << QString("%1 targets in config").arg(targets_num);
@@ -55,7 +60,7 @@ data_container DataSource::update()
 
     // Targets move
     for (int i = 0; i < targets_num; i++)
-        _targets[i]->i_update();
+        _targets[i]->i_update(world_time_delta);
 
     // Locator spin
 
