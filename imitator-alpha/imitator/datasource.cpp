@@ -32,15 +32,16 @@ void DataSource::configure(Storage *params)
      angleDelta = 2 * M_PI / thinStepsInFrame;
      world_time_delta = angleDelta / _locator->speed;
 
-     // Время
-
+     // В приемнике нужны параметры для Time
+     _receiver->setParamsForTime(thinStepsInFrame, world_time_delta);
 
      // Цели
      targets_num = params->parameters.targets.count();
      qDebug() << QString("%1 targets in config").arg(targets_num);
      for (int i = 0; i < targets_num; i++){
-         _targets[i] = new TargetConstSpeed();
-         // Передаем параметры ТОЛЬКО ОДНОЙ цели
+         _targets.append(new TargetConstSpeed());
+//         _targets[i] = new TargetConstSpeed();
+          // Передаем параметры ТОЛЬКО ОДНОЙ цели
          _targets[i]->configure(params->parameters.targets[i]);
          connect(this, SIGNAL(finish()), _targets[i], SLOT(deleteLater()));
      }
@@ -48,29 +49,35 @@ void DataSource::configure(Storage *params)
 
 data_container DataSource::update()
 {
-//    qDebug() << "DataSource update";
-//    data_container tempD;
-//    tempD.angle = 5;
-//    tempD.data = new complex<double>[20];
-//    for (int i = 0; i < 20; i++){
-//        tempD.data[i] = complex<double>(i, i);
-//    }
-//    return tempD;
-
-
-    // Targets move
+    // Движение целей
     for (int i = 0; i < targets_num; i++)
         _targets[i]->i_update(world_time_delta);
 
-    // Locator spin
+    // Поворот локатора
+    _locator->spin(world_time_delta);
 
+    // Подготовка приемника
+    _receiver->blank();
+
+    // Контейнер для сгенерированных данных
     data_container temp_data;
+    // Текущий угол
     temp_data.angle = currentAngle;
-//    temp_data.data =
+    // Массив отсчетов для текущего угла
+    temp_data.data = _receiver->i_receive(currentAngle, _targets, _locator);
 
-    // For next overview
+    // Меняем текущий угол для следующего кадра
     currentAngle += stepSizeWithThinning;
-
-    if (currentAngle >= thinStepsInFrame)
+    // Следующий обзор
+    if (currentAngle >= thinStepsInFrame){
+        // Обнуляем текущий угол, т.к. новый обзор
         currentAngle = 0;
+        // Флаг нового кадра (исп. в дальнейшей обработке)
+
+        !!! исправить frame на overview
+        temp_data.frame_flag = 1;
+    }
+
+    // Передаем данные для последующей обработки
+    return temp_data;
 }

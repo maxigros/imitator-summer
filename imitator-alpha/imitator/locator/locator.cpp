@@ -43,9 +43,36 @@ void Locator::configure(Storage *params)
 
 void Locator::spin(double world_time_delta)
 {
-    qDebug() << "Locator spin";
-    //self.locator_angle = (self.locator_angle + self.speed * world_time_delta) % 6.28
-    locator_angle = 2* M_PI * (locator_angle + speed * world_time_delta);
+    // Обновление текущего угла поворота локатора
+    locator_angle = (locator_angle + speed * world_time_delta) % (2*M_PI);
+}
+
+double Locator::gainForTarget(TargetGeneral *target)
+{
+    // Радиоимпульс
+    return gainForTargetAzimuth(target);
+}
+
+double Locator::gainForTargetAzimuth(TargetGeneral *target)
+{
+    // Пределы диаграммы
+    double zero_x = params_temp->parameters.simple.value("X_START");
+
+    double target_azimuth = target->getAzimuth() - locator_angle;
+        if ((target_azimuth > -zero_x) && (target_azimuth < zero_x))
+            for (int i = 1; i < x_angles.count(); i++)
+                if (x_angles[i] >= target_azimuth)
+                    return interpolate(target_azimuth,
+                                       x_angles[i - 1], // x1
+                                       x_angles[i],     // x2
+                                       x_values[i - 1], // y1
+                                       x_values[i]);    // y2
+        return 0;
+}
+
+double Locator::getLocatorAzimuth()
+{
+    return locator_angle;
 }
 
 void Locator::simpleDNA()
@@ -75,14 +102,35 @@ void Locator::simpleDNA()
 
     // Углы
     double step = params_temp->parameters.simple.value("SIMPLE_STEP");
-    for (double d = - zero_x; d < zero_x; d += step)
+    for (double d = - zero_x; d < zero_x; d += step){
         x_angles.append(d);
-    for (double d = - zero_z; d < zero_z; d += step)
+        x_values.append(0);
+    }
+    for (double d = - zero_z; d < zero_z; d += step){
         z_angles.append(d);
+        z_values.append(0);
+    }
 
     // Забиваем массивы расчитываемыми значениями
     for (int i = 0; i < x_angles.count(); i++)
         x_values[i] = sin(mul_x * sin(x_angles[i])) / (mul_x * sin(x_angles[i]));
     for (int i = 0; i < z_angles.count(); i++)
         z_values[i] = sin(mul_z * sin(z_angles[i])) / (mul_z * sin(z_angles[i]));
+}
+
+double Locator::interpolate(double point, double x1, double x2, double y1, double y2)
+{
+    // Линейная интерполяция, метод Лагранжа
+    double L = 0;
+    double x[2] = {x1, x2};
+    double y[2] = {y1, y2};
+
+    for (int i = 0; i < 2; ++i){
+            double l = 1;
+            for (int j = 0; j < 2; ++j)
+                if (i != j)
+                    l *= (point - x[j]) / (x[i] - x[j]);
+            L += y[i] * l;
+        }
+    return L;
 }

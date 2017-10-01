@@ -38,6 +38,12 @@ void BoxWriter::process()
                     this,   SLOT(getInfo(int)));
             break;
         case WRITER_MODE_FILE:
+            writer = new WriterFile();
+            writer->i_get_ready(dataArrayLength, thinStepsInFrame);
+            connect(this,   SIGNAL(finish()),
+                    writer, SLOT(deleteLater()));
+            connect(writer, SIGNAL(sendInfo(int)),
+                    this,   SLOT(getInfo(int)));
             break;
         default:
             break;

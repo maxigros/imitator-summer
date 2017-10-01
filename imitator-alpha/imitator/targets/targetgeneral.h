@@ -15,13 +15,15 @@ public:
     double getPlace();
     double getAzimuth();
     double getSpeed();
-    // interface
+
+    // Интерфейс
     void i_update(double world_time_delta);
 
 protected:
+    mt19937 generator;
     void translateCoordsToSphere();
 
-    //
+    // Переопределяется в наследниках
     virtual void update(double world_time_delta);
 
     /**************************************************************************

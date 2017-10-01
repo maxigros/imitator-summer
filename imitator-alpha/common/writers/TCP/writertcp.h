@@ -27,8 +27,6 @@ private:
     int tempCounter1 = 0;
     int tempCounter2 = 0;
 
-signals:
-    void sendInfo(int info);
 private slots:
     void getInfo(int info);
 };

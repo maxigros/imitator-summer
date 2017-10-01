@@ -42,6 +42,7 @@ void Server::sendToCli(QByteArray *data, int sockID)
         if (socketData->state() == QAbstractSocket::ConnectedState){
             qDebug() << "Socket DATA write";
             socketData->write(data->data(), data->size());
+            socketData->flush();
         }
         break;
     case SOCKET_ID_LOG:

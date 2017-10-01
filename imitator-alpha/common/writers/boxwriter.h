@@ -4,6 +4,7 @@
 #include "../../imitator/imitator_headers.h"
 #include "../config_storage/storage.h"
 #include "TCP/writertcp.h"
+#include "writerfile.h"
 
 class BoxWriter : public QObject
 {

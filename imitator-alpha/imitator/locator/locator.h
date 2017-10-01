@@ -3,6 +3,7 @@
 
 #include "../imitator_headers.h"
 #include "../../common/config_storage/storage.h"
+#include "../targets/targets.h"
 
 class Locator : public QObject
 {
@@ -12,11 +13,16 @@ public:
     ~Locator();
     void configure(Storage *params);
     void spin(double world_time_delta);
+    double gainForTarget(TargetGeneral *target);
+    double gainForTargetAzimuth(TargetGeneral *target);
+    double getLocatorAzimuth();
 
 private:
     Storage *params_temp;
     // ДНА вида sin(x)/x
     void simpleDNA();
+    // Интерполяция
+    double interpolate(double point, double x1, double x2, double y1, double y2);
     /**************************************************************************
      * Технические параметры локатора
      *************************************************************************/

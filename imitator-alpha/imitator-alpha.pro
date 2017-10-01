@@ -37,7 +37,9 @@ SOURCES += main.cpp\
     imitator/locator/locator.cpp \
     imitator/targets/targetgeneral.cpp \
     imitator/receivers/receiverradio.cpp \
-    imitator/targets/targetconstspeed.cpp
+    imitator/targets/targetconstspeed.cpp \
+    imitator/time.cpp \
+    common/writers/writerfile.cpp
 
 HEADERS  += mainwindow.h \
     common/config_storage/storage.h \
@@ -54,6 +56,8 @@ HEADERS  += mainwindow.h \
     imitator/targets/targetgeneral.h \
     imitator/targets/targets.h \
     imitator/receivers/receiverradio.h \
-    imitator/targets/targetconstspeed.h
+    imitator/targets/targetconstspeed.h \
+    imitator/time.h \
+    common/writers/writerfile.h
 
 FORMS    += mainwindow.ui

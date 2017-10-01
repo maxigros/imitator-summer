@@ -49,7 +49,7 @@ void TargetGeneral::configure(QMap<QString, double> currentTarget)
     }
 
     // Unknown
-    if (!(currentTarget.keys().contains("speed_sigma") &&
+    if (!(currentTarget.keys().contains("speed_sigma") ||
           currentTarget.keys().contains("acceleration_sigma"))){
         qDebug() << "TargetGeneral configure error unknown target";
         return;
@@ -73,6 +73,7 @@ double TargetGeneral::getAzimuth()
 
 double TargetGeneral::getSpeed()
 {
+//    qDebug() << "TargetGeneral getSpeed";
     double t = (place_coordinates.value("x") * speed_coordinates.value("Vx") +
                 place_coordinates.value("y") * speed_coordinates.value("Vy") +
                 place_coordinates.value("z") * speed_coordinates.value("Vz")) /
@@ -87,6 +88,7 @@ void TargetGeneral::i_update(double world_time_delta)
 
 void TargetGeneral::translateCoordsToSphere()
 {
+//    qDebug() << "TargetGeneral translate";
     sphere_coordinates["r"] = sqrt(pow(place_coordinates.value("x"), 2) +
                                    pow(place_coordinates.value("y"), 2) +
                                    pow(place_coordinates.value("z"), 2));
@@ -98,5 +100,5 @@ void TargetGeneral::translateCoordsToSphere()
 
 void TargetGeneral::update(double world_time_delta)
 {
-
+    Q_UNUSED(world_time_delta);
 }

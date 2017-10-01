@@ -6,7 +6,6 @@ WriterTcp::WriterTcp() : WriterGeneral()
     connect(moduleServer, SIGNAL(sendInfo(int)),
             this,         SLOT(getInfo(int)));
     moduleServer->start();
-
 }
 
 WriterTcp::~WriterTcp()
@@ -30,21 +29,29 @@ void WriterTcp::write(double angle, complex<double> *data)
     header_string[12] = (temp >>  8) & 0xFF;   //
     header_string[13] = (temp >>  0) & 0xFF;   //
 
-//    // Собираем пакет для отправки
+    // Собираем пакет для отправки
     bufferToSend.append(header_string);
 
     for (int i = 0; i < sizeToSend; i++)
         bufferToSend.append((char*)data + 2*sizeof(double)*i, 2*sizeof(double));
 
-    delete [] data;
+//    delete [] data;
 
     framesInBuffer++;
 
     qDebug() << QString("Frame %1").arg(QString::number(tempCounter1++));
 
-    if (framesInBuffer == 100){
+    if (framesInBuffer > 150){
+        int t = bufferToSend.size();
+        bufferToSend[0] = (t >> 24) & 0xFF;
+        bufferToSend[1] = (t >> 16) & 0xFF;
+        bufferToSend[2] = (t >>  8) & 0xFF;
+        bufferToSend[3] = (t >>  0) & 0xFF;
+
+        moduleServer->sendToCli(&bufferToSend, SOCKET_ID_DATA);
         framesInBuffer = 0;
-        qDebug() << QString("Overview %1").arg(QString::number(tempCounter2++));
+        qDebug() << QString("Package %1").arg(QString::number(tempCounter2++));
+        qDebug() << QString("Buffer size %1").arg(QString::number(bufferToSend.size()));
         tempCounter1 = 0;
         bufferToSend.clear();
     }
@@ -80,17 +87,20 @@ void WriterTcp::get_ready(int data_array_len, int steps_in_frame)
     header_string.append(QByteArray::fromRawData(&t2, sizeof(char)));   // start_type
     header_string.append(QByteArray::fromRawData(&t2, sizeof(char)));   // reserved0
     header_string.append(QByteArray::fromRawData(&t2, sizeof(char)));   // reserved1
-
+    // data_size
     header_string.append((sizeToSend >> 24) & 0xFF);  // 4
     header_string.append((sizeToSend >> 16) & 0xFF);  // 5
     header_string.append((sizeToSend >>  8) & 0xFF);  // 6
     header_string.append((sizeToSend >>  0) & 0xFF);  // 7
+    // angle
     unsigned short int angle = 0;
     header_string.append((angle >> 8) & 0xFF);    // 8
     header_string.append((angle >> 0) & 0xFF);    // 9
+    // sta_reserved
     unsigned short int sta_reserved = 0;
     header_string.append((sta_reserved >> 8) & 0xFF);    // 10
     header_string.append((sta_reserved >> 0) & 0xFF);    // 11
+    // time
     unsigned int time = 0;
     header_string.append((time >> 24) & 0xFF);    // 12
     header_string.append((time >> 16) & 0xFF);    // 13

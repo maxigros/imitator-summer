@@ -23,7 +23,9 @@ protected:
     virtual void newFrame();
     virtual void write(double angle, complex<double> *data);
     virtual void stop_writing();
-    virtual void get_ready(int data_array_len, int steps_in_frame);
+    virtual void get_ready(int data_array_len, int steps_in_frame);  
+signals:
+    void sendInfo(int info);
 };
 
 #endif // WRITERGENERAL_H

@@ -8,6 +8,7 @@
 #include "targets/targets.h"
 
 typedef struct{
+    char frame_flag = 0;
     double angle;
     complex<double> *data;
 } data_container;

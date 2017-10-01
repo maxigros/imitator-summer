@@ -57,6 +57,9 @@ void BoxGenerate::run()
 
     while (!toStop){
         data_container tempData = imitator->update();
+        if (tempData.frame_flag)
+            emit sendData(DATA_TYPE_NEW_FRAME, 0, NULL);
         emit sendData(DATA_TYPE_WRITE, tempData.angle, tempData.data);
+        delete [] tempData.data;
     }
 }

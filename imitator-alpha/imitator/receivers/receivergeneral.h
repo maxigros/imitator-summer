@@ -3,6 +3,9 @@
 
 #include "../imitator_headers.h"
 #include "../../common/config_storage/storage.h"
+#include "../targets/targets.h"
+#include "../locator/locator.h"
+#include "../time.h"
 
 class ReceiverGeneral : public QObject
 {
@@ -12,15 +15,26 @@ public:
     ~ReceiverGeneral();
     void configure(Storage *params);
     void blank();
+    void setParamsForTime(double t_thinStepsInFrame, double t_world_time_delta);
 
     // Интерфейсы
+    complex<double>* i_receive(double currentAngle,
+                               QList<TargetGeneral*> targets,
+                               Locator* locator);
 
-    // Переопределяются в наследниках
 protected:
     Storage *params_temp;
     complex<double> *echoArray;
     mt19937 generator;
+    Time *_time;
 
+    complex<double> dopler(double t, double speed);
+
+
+    // Переопределяются в наследниках
+    virtual complex<double>* receive(double currentAngle,
+                                     QList<TargetGeneral*> targets,
+                                     Locator* locator);
     /**************************************************************************
      * Технические параметры имитатора
      *************************************************************************/
@@ -29,6 +43,8 @@ protected:
     int sizeEchoArray;
     // Период дискретизации АЦП
     double periodSampling;
+    // Частота сигнала
+    double signalFrequency;
     // Период повторения импульсов
     double periodImpulseRepeat;
     // Длительность импульса
@@ -39,6 +55,10 @@ protected:
     double stationPower;
     // Коэффициент усиления приемника
     double receiverGain;
+    // Количество "прореженных шагов в обзоре"
+    double thinStepsInFrame;
+    // Период моделирования мира
+    double world_time_delta;
 
     double sigma;
     double mu = 0;
